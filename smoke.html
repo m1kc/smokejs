@@ -55,9 +55,11 @@
 					x._opacity = Math.abs(Math.random()/2);
 					document.body.appendChild(x);
 				}
+				
+				window.requestAnimationFrame(tick);
 			}
 
-			setInterval(tick, 1);
+			tick();
 		</script>
 	</body>
 </html>
