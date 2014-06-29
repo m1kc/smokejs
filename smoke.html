@@ -42,8 +42,7 @@
 						x._opacity = Math.abs(Math.random()/2);
 					}
 
-					x.style.bottom = x._bottom + 'px';
-					x.style.left = x._left + 'px';
+					x.style.webkitTransform = "translate3d("+x._left+"px,"+x._bottom+"px,0)";
 					x.style.opacity = x._opacity;
 				}
 				// Create new
