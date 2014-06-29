@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Smoke</title>
+		<style>
+			body {
+				background-color: black;
+			}
+			.smoke {
+				background-color: white;
+				width: 1px;
+				height: 1px;
+				position: absolute;
+			}
+		</style>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	</head>
+	<body>
+		<script>
+			function rand(x)
+			{
+				return Math.abs(Math.random() * x);
+			}
+
+			function tick()
+			{
+				var reused = false;
+				// Move existing
+				for (x of document.getElementsByClassName('smoke'))
+				{
+					x.style.bottom = (parseInt(x.style.bottom.replace('px', ''), 10)+rand(4)) + 'px';
+					x.style.left = (parseInt(x.style.left.replace('px', ''), 10)+rand(2)) + 'px';
+
+					if (parseFloat(x.style.opacity) < 0.0025)
+					{
+						reused = true;
+						x.style.bottom = '0px';
+						x.style.left = '0px';
+						x.style.opacity = Math.abs(Math.random()/2);
+					}
+
+					x.style.opacity = parseFloat(x.style.opacity) - 0.0025;
+				}
+				// Create new
+				if (reused === false)
+				{
+					var x = document.createElement('div');
+					$(x).addClass('smoke');
+					x.style.bottom = '0px';
+					x.style.left = '0px';
+					x.style.opacity = Math.abs(Math.random()/2);
+					document.body.appendChild(x);
+				}
+			}
+
+			setInterval(tick, 30);
+		</script>
+	</body>
+</html>
