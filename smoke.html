@@ -31,26 +31,29 @@
 				{
 					var x = particles[i];
 
-					x.style.bottom = (parseInt(x.style.bottom.replace('px', ''), 10)+rand(4)) + 'px';
-					x.style.left = (parseInt(x.style.left.replace('px', ''), 10)+rand(2)) + 'px';
+					x._bottom += rand(4);
+					x._left += rand(2);
+					x._opacity -= 0.0025;
 
-					if (parseFloat(x.style.opacity) < 0.0025)
+					if (x._opacity < 0.0025)
 					{
-						x.style.bottom = '0px';
-						x.style.left = '0px';
-						x.style.opacity = Math.abs(Math.random()/2);
+						x._bottom = 0;
+						x._left = 0;
+						x._opacity = Math.abs(Math.random()/2);
 					}
 
-					x.style.opacity = parseFloat(x.style.opacity) - 0.0025;
+					x.style.bottom = x._bottom + 'px';
+					x.style.left = x._left + 'px';
+					x.style.opacity = x._opacity;
 				}
 				// Create new
 				if (particles.length < 500)
 				{
 					var x = document.createElement('div');
 					$(x).addClass('smoke');
-					x.style.bottom = '0px';
-					x.style.left = '0px';
-					x.style.opacity = Math.abs(Math.random()/2);
+					x._bottom = 0;
+					x._left = 0;
+					x._opacity = Math.abs(Math.random()/2);
 					document.body.appendChild(x);
 				}
 			}
