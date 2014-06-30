@@ -5,6 +5,7 @@
 		<style>
 			body {
 				background-color: black;
+				overflow: hidden;
 			}
 			.smoke {
 				background-color: white;
@@ -24,36 +25,46 @@
 
 			function tick()
 			{
-				var reused = false;
 				// Move existing
-				for (x of document.getElementsByClassName('smoke'))
+				var particles = document.getElementsByClassName('smoke');
+				//console.log(particles.length)
+				for (var i=0; i<particles.length; i++)
 				{
-					x.style.bottom = (parseInt(x.style.bottom.replace('px', ''), 10)+rand(4)) + 'px';
-					x.style.left = (parseInt(x.style.left.replace('px', ''), 10)+rand(2)) + 'px';
+					var x = particles[i];
 
-					if (parseFloat(x.style.opacity) < 0.0025)
+					x._bottom += rand(4);
+					x._left += rand(2);
+					x._opacity -= 0.005;
+
+					if (x._opacity < 0.005)
 					{
-						reused = true;
-						x.style.bottom = '0px';
-						x.style.left = '0px';
-						x.style.opacity = Math.abs(Math.random()/2);
+						x._bottom = -1;
+						x._left = -1;
+						x._opacity = Math.abs(Math.random()/2);
 					}
 
-					x.style.opacity = parseFloat(x.style.opacity) - 0.0025;
+					x.style.bottom = x._bottom + 'px';
+					x.style.left = x._left + 'px';
+					x.style.opacity = x._opacity;
 				}
 				// Create new
-				if (reused === false)
+				if (particles.length < 100)
 				{
 					var x = document.createElement('div');
 					$(x).addClass('smoke');
-					x.style.bottom = '0px';
-					x.style.left = '0px';
-					x.style.opacity = Math.abs(Math.random()/2);
+					x._bottom = -1;
+					x._left = -1;
+					x._opacity = Math.abs(Math.random()/2);
+					x.style.bottom = x._bottom + 'px';
+					x.style.left = x._left + 'px';
+					x.style.opacity = x._opacity;
 					document.body.appendChild(x);
 				}
+
+				window.requestAnimationFrame(tick, document.body);
 			}
 
-			setInterval(tick, 30);
+			window.requestAnimationFrame(tick, document.body);
 		</script>
 	</body>
 </html>
