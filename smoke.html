@@ -5,6 +5,7 @@
 		<style>
 			body {
 				background-color: black;
+				overflow: hidden;
 			}
 			.smoke {
 				background-color: white;
@@ -26,19 +27,19 @@
 			{
 				// Move existing
 				var particles = document.getElementsByClassName('smoke');
-				console.log(particles.length)
+				//console.log(particles.length)
 				for (var i=0; i<particles.length; i++)
 				{
 					var x = particles[i];
 
 					x._bottom += rand(4);
 					x._left += rand(2);
-					x._opacity -= 0.0025;
+					x._opacity -= 0.005;
 
-					if (x._opacity < 0.0025)
+					if (x._opacity < 0.005)
 					{
-						x._bottom = 0;
-						x._left = 0;
+						x._bottom = -1;
+						x._left = -1;
 						x._opacity = Math.abs(Math.random()/2);
 					}
 
@@ -47,20 +48,23 @@
 					x.style.opacity = x._opacity;
 				}
 				// Create new
-				if (particles.length < 500)
+				if (particles.length < 100)
 				{
 					var x = document.createElement('div');
 					$(x).addClass('smoke');
-					x._bottom = 0;
-					x._left = 0;
+					x._bottom = -1;
+					x._left = -1;
 					x._opacity = Math.abs(Math.random()/2);
+					x.style.bottom = x._bottom + 'px';
+					x.style.left = x._left + 'px';
+					x.style.opacity = x._opacity;
 					document.body.appendChild(x);
 				}
-				
-				window.requestAnimationFrame(tick);
+
+				window.requestAnimationFrame(tick, document.body);
 			}
 
-			tick();
+			window.requestAnimationFrame(tick, document.body);
 		</script>
 	</body>
 </html>
